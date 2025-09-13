@@ -1,17 +1,15 @@
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react'
+import React, { useState } from 'react'
 import { data } from '../data/data';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
 const ProductCard = ({ selectedCategory, searchQuery }) => {
-
     const router = useRouter();
+    const [liked, setLiked] = useState({});
 
-    const [liked, setLiked] = React.useState({});
-    const navigation = useNavigation();
 
     const toggleLike = (id) => {
         setLiked(prev => ({ ...prev, [id]: !prev[id] }));

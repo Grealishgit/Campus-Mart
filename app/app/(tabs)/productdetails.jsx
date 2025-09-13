@@ -66,6 +66,7 @@ const ProductDetails = () => {
                                 <Text style={styles.price}>{productObj.price} {productObj.priceValue}</Text>
                             </View>
                         </View>
+
                         <View style={styles.sellerContainer}>
                             <Text style={styles.seller}>
                                 Seller:  {productObj.seller}
@@ -98,17 +99,23 @@ const ProductDetails = () => {
 
                         <Text style={styles.description}>{productObj.description}</Text>
                         <Text style={styles.posted}>Posted: {productObj.postedDate}</Text>
+
+                        <View style={styles.buttons}>
+                            <TouchableOpacity style={styles.addFavoriteButton}>
+                                <Text style={styles.buttonText}>
+                                    Add to Favorite
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.messageButton}>
+                                <Text style={styles.buttonText1}>
+                                    Message Seller    
+                                </Text>
+
+                            </TouchableOpacity>
+                        </View>
                     </ScrollView>
                 </View>
-                <View>
-                    <TouchableOpacity>
-                        Message Seller
-                    </TouchableOpacity>
 
-                    <TouchableOpacity>
-                        Message Seller
-                    </TouchableOpacity>
-                </View>
             </View>
         </SafeScreen>
     );
@@ -258,9 +265,45 @@ const styles = StyleSheet.create({
     posted: {
         fontSize: 13,
         color: '#888',
-        marginTop: 8,
+        marginTop: 5,
         alignSelf: 'flex-end',
     },
+    buttons: {
+        width: '100%',
+        marginTop: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 5
+    },
+    messageButton: {
+        width: '50%',
+        justifyContent: 'center',
+        backgroundColor: '#155dfc',
+        padding: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+        margin: 0,
+    },
+    addFavoriteButton: {
+        width: '50%',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#155dfc',
+        padding: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+        margin: 0,
+    },
+    buttonText: {
+        color: '#155dfc',
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
+    buttonText1: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold'
+    }
 });
 
 
