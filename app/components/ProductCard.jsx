@@ -1,4 +1,4 @@
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Feather } from '@expo/vector-icons';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import React from 'react'
 import { data } from '../data/data';
@@ -27,7 +27,10 @@ const ProductCard = () => {
                                     color={liked[product.id] ? 'red' : 'gray'}
                                 />
                             </TouchableOpacity>
+                            {/* Image */}
                             <Image source={{ uri: product.image }} style={styles.productImage} />
+
+
                             <View style={styles.productInfo}>
                                 <View style={styles.productTitle}>
                                     <Text style={styles.title}>{(product.title.length > 20 ?
@@ -35,11 +38,24 @@ const ProductCard = () => {
                                     )}</Text>
                                     <Text style={styles.price}>{product.price} {product.priceValue}</Text>
                                 </View>
+                                <View style={styles.productTitle}>
+                                    <Text style={styles.seller}>{(product.seller.length > 10 ?
+                                        product.seller.substring(0, 5) + '' : product.seller
+                                    )} ● {product.location} </Text>
+                                </View>
 
-                                <Text style={styles.category}>Category: {product.category}</Text>
-                                <Text style={styles.seller}>Seller: {product.seller} ({product.sellerRating}⭐)</Text>
+                                <View style={styles.productTitle}>
+                                    <Text style={styles.category}>{product.category}</Text>
+                                    <Text style={styles.seller}> ({product.sellerRating}⭐)</Text>
+                                </View>
+
                                 <Text style={styles.posted}>Posted: {product.postedDate}</Text>
                             </View>
+
+                            <TouchableOpacity style={styles.messageButton}>
+                                <Feather name="message-circle" size={16} color="white" style={{ marginRight: 5 }} />
+                                <Text style={styles.messageText}>Message Seller</Text>
+                            </TouchableOpacity>
                         </View>
                     ))}
                 </View>
@@ -53,7 +69,7 @@ const styles = StyleSheet.create({
     likeButton: {
         position: 'absolute',
         top: 5,
-        right: 15,
+        right: 7,
         zIndex: 1,
         width: 30,
         height: 30,
@@ -73,11 +89,15 @@ const styles = StyleSheet.create({
     price: {
         color: '#155dfc',
         fontWeight: 'bold',
+        fontSize: 20,
         marginBottom: 2,
     },
     category: {
+        borderRadius: 25,
+        paddingHorizontal: 6,
+        paddingVertical: 2,
         fontSize: 12,
-        color: '#555',
+        backgroundColor: '#c8cbd0',
         marginBottom: 2,
     },
     seller: {
@@ -114,20 +134,36 @@ const styles = StyleSheet.create({
     },
     productImage: {
         width: '100%',
-        height: 100,
+        height: 120,
         resizeMode: 'cover',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         marginBottom: 5
     },
     productInfo: {
-        padding: 10
+        paddingLeft: 10
     },
     productTitle: {
         flexDirection: 'row',
-        padding: 5,
+        marginLeft: 5,
+        marginRight: 5,
         justifyContent: 'space-between',
         alignItems: 'center'
     },
+    messageButton: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        width: '90%',
+        marginLeft: '5%',
+        backgroundColor: '#155dfc',
+        padding: 8,
+        borderRadius: 5,
+        alignItems: 'center',
+        margin: 10,
+    },
+    messageText: {
+        color: 'white',
+        fontWeight: 'bold'
+    }
     // ...existing code...
 })
