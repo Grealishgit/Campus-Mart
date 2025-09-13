@@ -2,7 +2,7 @@ import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'rea
 import React from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import SafeScreen from '@/components/SafeScreen';
-import { Ionicons, Octicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons, Octicons } from '@expo/vector-icons';
 
 const ProductDetails = () => {
     // Function to map rating to Ionicons stars
@@ -70,7 +70,10 @@ const ProductDetails = () => {
                         <View style={styles.sellerContainer}>
                             <View style={styles.sellerView}>
                                 <Text style={styles.sellerText}> Seller:  {productObj.seller}</Text>
-                                <Octicons name='verified' color='#155dfc' size={15} />
+                                {productObj.isVerified ? <Octicons name='verified' color='#155dfc' size={15} /> :
+                                    <MaterialIcons name='error' color='#155dfc' size={15}
+                                    />}
+
                             </View>
 
                             <View style={styles.stars}>
