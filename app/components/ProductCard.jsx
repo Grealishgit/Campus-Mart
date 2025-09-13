@@ -73,13 +73,22 @@ const ProductCard = ({ selectedCategory, searchQuery }) => {
                                 <Text style={styles.posted}>Posted: {product.postedDate}</Text>
                             </View>
 
-                            <TouchableOpacity
-                                style={styles.messageButton}
-                                onPress={() => router.push({ pathname: '/(tabs)/productdetails', params: { product: JSON.stringify(product) } })}
-                            >
-                                <Feather name="message-circle" size={16} color="white" style={{ marginRight: 5 }} />
-                                <Text style={styles.messageText}>Message Seller</Text>
-                            </TouchableOpacity>
+                            <View style={styles.buttons}>
+                                <TouchableOpacity
+                                    style={styles.viewButton}
+                                    onPress={() => router.push({ pathname: '/(tabs)/productdetails', params: { product: JSON.stringify(product) } })}
+                                >
+
+                                    <Text style={styles.messageText}>View </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.messageButton}
+                                    onPress={() => router.push('/(tabs)/chat')}
+                                >
+                                    <Feather name="message-circle" size={16} color="white" style={{ marginRight: 5 }} />
+                                </TouchableOpacity>
+                            </View>
+
                         </View>
                     ))}
                 </View>
@@ -174,20 +183,37 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center'
     },
-    messageButton: {
+    viewButton: {
+        flex: 7,
         flexDirection: 'row',
         justifyContent: 'center',
-        width: '90%',
-        marginLeft: '5%',
         backgroundColor: '#155dfc',
         padding: 8,
         borderRadius: 8,
         alignItems: 'center',
-        margin: 10,
+        margin: 0,
+    },
+    messageButton: {
+        flex: 2,
+        justifyContent: 'center',
+        backgroundColor: '#155dfc',
+        padding: 8,
+        borderRadius: 8,
+        alignItems: 'center',
+        margin: 0,
     },
     messageText: {
         color: 'white',
         fontWeight: 'bold'
-    }
+    },
+    buttons: {
+        width: '100%',
+        gap: 4,
+        maxWidth: 140,
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginBottom: 8,
+    },
     // ...existing code...
 })

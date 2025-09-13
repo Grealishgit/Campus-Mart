@@ -85,6 +85,7 @@ const ProductDetails = () => {
                                     {productObj.location}
                                 </Text>
                             </Text>
+                            <Text style={styles.location}>Quantity: {productObj.quantity}</Text>
                             <View style={styles.reviews}>
                                 <View style={styles.sellerReviews}>
                                     <Text>
@@ -98,6 +99,15 @@ const ProductDetails = () => {
                         <Text style={styles.description}>{productObj.description}</Text>
                         <Text style={styles.posted}>Posted: {productObj.postedDate}</Text>
                     </ScrollView>
+                </View>
+                <View>
+                    <TouchableOpacity>
+                        Message Seller
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                        Message Seller
+                    </TouchableOpacity>
                 </View>
             </View>
         </SafeScreen>
