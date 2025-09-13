@@ -60,6 +60,7 @@ const ProductDetails = () => {
                             <View style={styles.chipRow}>
                                 <Text style={styles.chip}>{productObj.category}</Text>
                                 <Text style={styles.chip}>{productObj.condition}</Text>
+                                <Text style={styles.chip}>{(productObj.isFavorite ? 'Unliked' : 'Liked')}</Text>
                             </View>
                             <View>
                                 <Text style={styles.price}>{productObj.price} {productObj.priceValue}</Text>
@@ -161,22 +162,22 @@ const styles = StyleSheet.create({
     price: {
         color: '#155dfc',
         fontWeight: 'bold',
-        fontSize: 30,
+        fontSize: 28,
         marginBottom: 10,
         textShadowRadius: 4,
     },
     chipRowMain: {
         marginTop: 10,
         flexDirection: 'row',
-        gap: 8,
-        marginBottom: 10,
+        gap: 2,
+        marginBottom: 5,
         justifyContent: 'space-between',
         alignItems: 'center'
     },
     chipRow: {
         flexDirection: 'row',
-        gap: 8,
-        marginBottom: 10,
+        gap: 1,
+        marginBottom: 5,
         justifyContent: 'space-between'
     },
     chip: {
