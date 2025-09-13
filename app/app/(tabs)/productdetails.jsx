@@ -2,7 +2,7 @@ import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'rea
 import React from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import SafeScreen from '@/components/SafeScreen';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Octicons } from '@expo/vector-icons';
 
 const ProductDetails = () => {
     // Function to map rating to Ionicons stars
@@ -68,9 +68,10 @@ const ProductDetails = () => {
                         </View>
 
                         <View style={styles.sellerContainer}>
-                            <Text style={styles.seller}>
-                                Seller:  {productObj.seller}
-                            </Text>
+                            <View style={styles.sellerView}>
+                                <Text style={styles.sellerText}> Seller:  {productObj.seller}</Text>
+                                <Octicons name='verified' color='#155dfc' size={15} />
+                            </View>
 
                             <View style={styles.stars}>
                                 {renderStars(productObj.sellerRating)}
@@ -80,24 +81,25 @@ const ProductDetails = () => {
                         </View>
 
                         <View style={styles.sellerContainer}>
-                            <Text style={styles.location}>
-                                Location:
-                                <Text style={{ fontWeight: 'bold' }}>
+                            <Text style={styles.chip}>
+                                Location: <Text style={{ fontWeight: 'bold' }}>
                                     {productObj.location}
                                 </Text>
                             </Text>
-                            <Text style={styles.location}>Quantity: {productObj.quantity}</Text>
+                            <Text style={styles.chip}>Quantity: {productObj.quantity}</Text>
                             <View style={styles.reviews}>
                                 <View style={styles.sellerReviews}>
-                                    <Text>
+                                    <Text style={styles.reviewText}>
                                         {productObj.sellerReviews}
                                     </Text>
                                 </View>
                                 <Text style={styles.reviewText}>Reviews</Text>
                             </View>
                         </View>
+                        <View style={styles.separator}></View>
 
                         <Text style={styles.description}>{productObj.description}</Text>
+
                         <Text style={styles.posted}>Posted: {productObj.postedDate}</Text>
 
                         <View style={styles.buttons}>
@@ -147,7 +149,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         gap: 5,
-        marginBottom: 12,
+        marginBottom: 5,
         justifyContent: 'center'
     },
     glassWrapper: {
@@ -172,7 +174,7 @@ const styles = StyleSheet.create({
         marginTop: -20,
         fontWeight: 'bold',
         fontSize: 26,
-        marginBottom: 8,
+        marginBottom: 5,
         color: '#fff',
         textAlign: 'center'
     },
@@ -180,11 +182,11 @@ const styles = StyleSheet.create({
         color: '#155dfc',
         fontWeight: 'bold',
         fontSize: 28,
-        marginBottom: 10,
+        marginBottom: 5,
         textShadowRadius: 4,
     },
     chipRowMain: {
-        marginTop: 10,
+        marginTop: 5,
         flexDirection: 'row',
         gap: 2,
         marginBottom: 5,
@@ -211,11 +213,22 @@ const styles = StyleSheet.create({
     sellerContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 5
+    },
+    sellerView: {
+        flexDirection: 'row',
+        gap: 3,
         alignItems: 'center'
     },
     seller: {
         fontSize: 16,
         marginBottom: 4,
+        color: '#333',
+    },
+    sellerText: {
+        fontWeight: 'bold',
+        fontSize: 18,
         color: '#333',
     },
     stars: {
@@ -224,12 +237,7 @@ const styles = StyleSheet.create({
         marginLeft: 6
     },
     sellerReviews: {
-        width: 24,
         alignItems: 'center',
-        height: 24,
-        borderColor: '#155dfc',
-        borderRadius: 12,
-        borderWidth: 1,
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 6,
@@ -237,10 +245,19 @@ const styles = StyleSheet.create({
     reviews: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 2
+        gap: 2,
+        backgroundColor: 'rgba(21,93,252,0.12)',
+        color: '#155dfc',
+        borderRadius: 16,
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        fontWeight: 'bold',
+        fontSize: 14,
+        marginRight: 8,
+        overflow: 'hidden',
     },
     reviewText: {
-        color: '#000',
+        color: '#155dfc',
         fontSize: 15,
         fontWeight: 'bold',
         marginLeft: 4
@@ -303,6 +320,12 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold'
+    },
+    separator: {
+        marginTop: 8,
+        marginBottom: 5,
+        borderWidth: 0.5,
+        borderColor: 'gray',
     }
 });
 
