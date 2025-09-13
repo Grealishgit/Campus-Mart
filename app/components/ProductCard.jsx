@@ -1,21 +1,42 @@
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react'
 import { data } from '../data/data';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
-const ProductCard = () => {
+const ProductCard = ({ selectedCategory, searchQuery }) => {
+
+    const router = useRouter();
+
     const [liked, setLiked] = React.useState({});
+    const navigation = useNavigation();
 
     const toggleLike = (id) => {
         setLiked(prev => ({ ...prev, [id]: !prev[id] }));
     };
 
+    // Filter products by selectedCategory and searchQuery
+    let filteredProducts = data;
+    if (selectedCategory && selectedCategory !== 'All') {
+        filteredProducts = filteredProducts.filter(product => product.category === selectedCategory);
+    }
+    if (searchQuery && searchQuery.trim() !== '') {
+        const q = searchQuery.trim().toLowerCase();
+        filteredProducts = filteredProducts.filter(product =>
+            product.title.toLowerCase().includes(q) ||
+            product.category.toLowerCase().includes(q) ||
+            product.seller.toLowerCase().includes(q) ||
+            (product.description && product.description.toLowerCase().includes(q))
+        );
+    }
+
     return (
         <View style={styles.container}>
             <ScrollView vertical showsVerticalScrollIndicator={false}>
                 <View style={styles.productContainer}>
-                    {data.map((product) => (
+                    {filteredProducts.map((product) => (
                         <View key={product.id} style={styles.productCard}>
                             <TouchableOpacity
                                 style={styles.likeButton}
@@ -52,7 +73,10 @@ const ProductCard = () => {
                                 <Text style={styles.posted}>Posted: {product.postedDate}</Text>
                             </View>
 
-                            <TouchableOpacity style={styles.messageButton}>
+                            <TouchableOpacity
+                                style={styles.messageButton}
+                                onPress={() => router.push({ pathname: '/(tabs)/productdetails', params: { product: JSON.stringify(product) } })}
+                            >
                                 <Feather name="message-circle" size={16} color="white" style={{ marginRight: 5 }} />
                                 <Text style={styles.messageText}>Message Seller</Text>
                             </TouchableOpacity>
@@ -82,7 +106,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontWeight: 'bold',
-        fontSize: 15,
+        fontSize: 20,
         flex: 1,
         flexWrap: 'wrap',
     },
@@ -157,7 +181,7 @@ const styles = StyleSheet.create({
         marginLeft: '5%',
         backgroundColor: '#155dfc',
         padding: 8,
-        borderRadius: 5,
+        borderRadius: 8,
         alignItems: 'center',
         margin: 10,
     },

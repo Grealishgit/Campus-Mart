@@ -11,16 +11,26 @@ import SafeScreen from '@/components/SafeScreen';
 import SearchContainer from '@/components/SearchContainer';
 import ProductCard from '@/components/ProductCard';
 
+import React, { useState } from 'react';
+
 export default function HomeScreen() {
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Handler for SearchContainer
+  const handleFilterChange = (category, query) => {
+    setSelectedCategory(category);
+    setSearchQuery(query);
+  };
+
   return (
     <SafeScreen>
       <View style={styles.container}>
         <TopHeader />
-        <SearchContainer />
-        <ProductCard />
+        <SearchContainer onCategoryChange={handleFilterChange} />
+        <ProductCard selectedCategory={selectedCategory} searchQuery={searchQuery} />
       </View>
     </SafeScreen>
-
   );
 }
 

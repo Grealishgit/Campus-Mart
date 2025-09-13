@@ -1,9 +1,9 @@
 import { View, Text, TextInput, StyleSheet, Touchable, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Feather, Ionicons } from '@expo/vector-icons'
 import { data } from '../data/data';
 
-const SearchContainer = () => {
+const SearchContainer = (props) => {
 
     // Get unique categories and sort alphabetically
     const categories = Array.from(new Set(data.map(item => item.category)));
@@ -11,12 +11,31 @@ const SearchContainer = () => {
     const allCategories = ['All', ...categories];
 
     const [activeCategory, setActiveCategory] = useState('All');
+    const [searchQuery, setSearchQuery] = useState('');
+
+    // Notify parent of category or search changes
+    useEffect(() => {
+        if (typeof props?.onCategoryChange === 'function') {
+            props.onCategoryChange(activeCategory, searchQuery);
+        }
+    }, [activeCategory, searchQuery]);
+
+    // Allow parent to receive selected category
+
+    useEffect(() => {
+        if (typeof props?.onCategoryChange === 'function') {
+            props.onCategoryChange(activeCategory);
+        }
+    }, [activeCategory]);
 
     return (
         <View style={styles.container}>
             <View>
-                <TextInput placeholder='Search  products...'
+                <TextInput
+                    placeholder='Search products...'
                     style={styles.inputContainer}
+                    value={searchQuery}
+                    onChangeText={setSearchQuery}
                 />
                 <Ionicons name="search" size={22} color="gray" style={styles.searchIcon} />
                 <Feather name="filter" size={20} color="gray" style={styles.searchIcon1} />
