@@ -8,12 +8,14 @@ import { ThemedView } from '@/components/themed-view';
 import { Link } from 'expo-router';
 import TopHeader from '@/components/TopHeader';
 import SafeScreen from '@/components/SafeScreen';
+import SearchContainer from '@/components/SearchContainer';
 
 export default function HomeScreen() {
   return (
     <SafeScreen>
       <View style={styles.container}>
         <TopHeader />
+        <SearchContainer />
       </View>
     </SafeScreen>
 
