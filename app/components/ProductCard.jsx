@@ -35,63 +35,73 @@ const ProductCard = ({ selectedCategory, searchQuery }) => {
     return (
         <View style={styles.container}>
             <ScrollView vertical showsVerticalScrollIndicator={false}>
-                <View style={styles.productContainer}>
-                    {filteredProducts.map((product) => (
-                        <View key={product.id} style={styles.productCard}>
+                {filteredProducts.length > 0 ? (
+                    <View style={styles.productContainer}>
+                        {filteredProducts.map((product) => (
                             <TouchableOpacity
-                                style={styles.likeButton}
-                                onPress={() => toggleLike(product.id)}
+                                key={product.id}
+                                style={styles.productCard}
+                                activeOpacity={0.85}
+                                onPress={() => router.push({ pathname: '/(tabs)/productdetails', params: { product: JSON.stringify(product) } })}
                             >
-                                <Ionicons
-                                    name={liked[product.id] ? 'heart' : 'heart-outline'}
-                                    size={18}
-                                    color={liked[product.id] ? 'red' : 'gray'}
-                                />
+                                <TouchableOpacity
+                                    style={styles.likeButton}
+                                    onPress={() => toggleLike(product.id)}
+                                >
+                                    <Ionicons
+                                        name={liked[product.id] ? 'heart' : 'heart-outline'}
+                                        size={18}
+                                        color={liked[product.id] ? 'red' : 'gray'}
+                                    />
+                                </TouchableOpacity>
+                                <View style={styles.postedContainer}>
+                                    <Text style={styles.posted}> {product.postedDate}</Text>
+                                </View>
+
+                                {/* Image */}
+                                <Image source={{ uri: product.image }} style={styles.productImage} />
+
+                                <View style={styles.productInfo}>
+                                    <View style={styles.productTitle}>
+                                        <Text style={styles.title}>{(product.title.length > 20 ?
+                                            product.title.substring(0, 8) + '...' : product.title
+                                        )}</Text>
+                                        <Text style={styles.price}>{product.price} {product.priceValue}</Text>
+                                    </View>
+                                    <View style={styles.productTitle}>
+                                        <Text style={styles.seller}>{(product.seller.length > 10 ?
+                                            product.seller.substring(0, 5) + '' : product.seller
+                                        )} ● {product.location} </Text>
+                                    </View>
+
+                                    <View style={styles.productTitle}>
+                                        <Text style={styles.category}>{product.category}</Text>
+                                        <Text style={styles.seller}> ({product.sellerRating}⭐)</Text>
+                                    </View>
+                                </View>
+
+                                <View style={styles.buttons}>
+                                    <TouchableOpacity
+                                        style={styles.viewButton}
+                                        onPress={() => router.push({ pathname: '/(tabs)/productdetails', params: { product: JSON.stringify(product) } })}
+                                    >
+                                        <Text style={styles.messageText}>View Product </Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        style={styles.messageButton}
+                                        onPress={() => router.push('/(tabs)/chat')}
+                                    >
+                                        <Feather name="message-circle" size={16} color="#155dfc" />
+                                    </TouchableOpacity>
+                                </View>
                             </TouchableOpacity>
-                            {/* Image */}
-                            <Image source={{ uri: product.image }} style={styles.productImage} />
-
-
-                            <View style={styles.productInfo}>
-                                <View style={styles.productTitle}>
-                                    <Text style={styles.title}>{(product.title.length > 20 ?
-                                        product.title.substring(0, 8) + '...' : product.title
-                                    )}</Text>
-                                    <Text style={styles.price}>{product.price} {product.priceValue}</Text>
-                                </View>
-                                <View style={styles.productTitle}>
-                                    <Text style={styles.seller}>{(product.seller.length > 10 ?
-                                        product.seller.substring(0, 5) + '' : product.seller
-                                    )} ● {product.location} </Text>
-                                </View>
-
-                                <View style={styles.productTitle}>
-                                    <Text style={styles.category}>{product.category}</Text>
-                                    <Text style={styles.seller}> ({product.sellerRating}⭐)</Text>
-                                </View>
-
-                                <Text style={styles.posted}>Posted: {product.postedDate}</Text>
-                            </View>
-
-                            <View style={styles.buttons}>
-                                <TouchableOpacity
-                                    style={styles.viewButton}
-                                    onPress={() => router.push({ pathname: '/(tabs)/productdetails', params: { product: JSON.stringify(product) } })}
-                                >
-
-                                    <Text style={styles.messageText}>View </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={styles.messageButton}
-                                    onPress={() => router.push('/(tabs)/chat')}
-                                >
-                                    <Feather name="message-circle" size={16} color="white" style={{ marginRight: 5 }} />
-                                </TouchableOpacity>
-                            </View>
-
-                        </View>
-                    ))}
-                </View>
+                        ))}
+                    </View>
+                ) : (
+                    <View style={styles.noproduct}>
+                        <Text style={styles.noproductText}>No Products Found</Text>
+                    </View>
+                )}
             </ScrollView>
         </View>
     );
@@ -138,9 +148,16 @@ const styles = StyleSheet.create({
         color: '#555',
         marginBottom: 2,
     },
+    postedContainer: {
+        position: 'absolute',
+        top: 3,
+        left: 4,
+        zIndex: 2
+    },
     posted: {
-        fontSize: 11,
-        color: '#888',
+        fontSize: 15,
+        color: '#fff',
+        fontWeight: 'bold'
     },
     container: {
         alignItems: 'center',
@@ -188,7 +205,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         backgroundColor: '#155dfc',
-        padding: 8,
+        padding: 6,
         borderRadius: 8,
         alignItems: 'center',
         margin: 0,
@@ -196,8 +213,9 @@ const styles = StyleSheet.create({
     messageButton: {
         flex: 2,
         justifyContent: 'center',
-        backgroundColor: '#155dfc',
-        padding: 8,
+        borderWidth: 1,
+        borderColor: '#155dfc',
+        padding: 6,
         borderRadius: 8,
         alignItems: 'center',
         margin: 0,
@@ -214,6 +232,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
         marginBottom: 8,
+        marginTop: 10
     },
+    noproduct: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center'
+    },
+    noproductText: {
+        color: '#155dfc',
+        fontWeight: 'bold',
+        fontSize: 30
+    }
     // ...existing code...
 })
