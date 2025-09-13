@@ -1,10 +1,13 @@
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import SafeScreen from '@/components/SafeScreen';
 import { Ionicons, MaterialIcons, Octicons } from '@expo/vector-icons';
 
 const ProductDetails = () => {
+
+    const router = useRouter();
+
     // Function to map rating to Ionicons stars
     const renderStars = (rating) => {
         const fullStars = Math.floor(rating);
@@ -111,7 +114,7 @@ const ProductDetails = () => {
                                     Add to Favorite
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.messageButton}>
+                            <TouchableOpacity style={styles.messageButton} onPress={() => router.push('/chat')}>
                                 <Text style={styles.buttonText1}>
                                     Message Seller    
                                 </Text>
