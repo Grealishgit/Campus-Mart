@@ -2,8 +2,26 @@ import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'rea
 import React from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import SafeScreen from '@/components/SafeScreen';
+import { Ionicons } from '@expo/vector-icons';
 
 const ProductDetails = () => {
+    // Function to map rating to Ionicons stars
+    const renderStars = (rating) => {
+        const fullStars = Math.floor(rating);
+        const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+        const emptyStars = 5 - fullStars - halfStar;
+        let stars = [];
+        for (let i = 0; i < fullStars; i++) stars.push(
+            <Ionicons key={`full-${i}`} name='star' color='#f5b700' size={20} />
+        );
+        if (halfStar) stars.push(
+            <Ionicons key='half' name='star-half' color='#f5b700' size={20} />
+        );
+        for (let i = 0; i < emptyStars; i++) stars.push(
+            <Ionicons key={`empty-${i}`} name='star-outline' color='#f5b700' size={20} />
+        );
+        return stars;
+    };
     const { product } = useLocalSearchParams();
     let productObj = null;
     try {
@@ -47,8 +65,35 @@ const ProductDetails = () => {
                                 <Text style={styles.price}>{productObj.price} {productObj.priceValue}</Text>
                             </View>
                         </View>
-                        <Text style={styles.seller}>Seller: <Text style={{ fontWeight: 'bold' }}>{productObj.seller}</Text> ({productObj.sellerRating}⭐)</Text>
-                        <Text style={styles.location}>Location: <Text style={{ fontWeight: 'bold' }}>{productObj.location}</Text></Text>
+                        <View style={styles.sellerContainer}>
+                            <Text style={styles.seller}>
+                                Seller:  {productObj.seller}
+                            </Text>
+
+                            <View style={styles.stars}>
+                                {renderStars(productObj.sellerRating)}
+                                <Text style={styles.ratingText}>({productObj.sellerRating})</Text>
+                            </View>
+
+                        </View>
+
+                        <View style={styles.sellerContainer}>
+                            <Text style={styles.location}>
+                                Location:
+                                <Text style={{ fontWeight: 'bold' }}>
+                                    {productObj.location}
+                                </Text>
+                            </Text>
+                            <View style={styles.reviews}>
+                                <View style={styles.sellerReviews}>
+                                    <Text>
+                                        {productObj.sellerReviews}
+                                    </Text>
+                                </View>
+                                <Text style={styles.reviewText}>Reviews</Text>
+                            </View>
+                        </View>
+
                         <Text style={styles.description}>{productObj.description}</Text>
                         <Text style={styles.posted}>Posted: {productObj.postedDate}</Text>
                     </ScrollView>
@@ -145,10 +190,48 @@ const styles = StyleSheet.create({
         marginRight: 8,
         overflow: 'hidden',
     },
+    sellerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
     seller: {
         fontSize: 16,
         marginBottom: 4,
         color: '#333',
+    },
+    stars: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 6
+    },
+    sellerReviews: {
+        width: 24,
+        alignItems: 'center',
+        height: 24,
+        borderColor: '#155dfc',
+        borderRadius: 12,
+        borderWidth: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 6,
+    },
+    reviews: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 2
+    },
+    reviewText: {
+        color: '#000',
+        fontSize: 15,
+        fontWeight: 'bold',
+        marginLeft: 4
+    },
+    ratingText: {
+        color: '#888',
+        fontSize: 15,
+        fontWeight: 'bold',
+        marginLeft: 4
     },
     location: {
         fontSize: 16,
