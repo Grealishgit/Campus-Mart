@@ -1,15 +1,16 @@
-import { View, Text } from 'react-native'
+import { View, Text, useColorScheme } from 'react-native'
 import React from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 
 const SafeScreen = ({ children }) => {
+    const colorScheme = useColorScheme();
     const insets = useSafeAreaInsets();
     return (
         <View style={{
             paddingTop: insets.top,
             flex: 1,
-            backgroundColor: 'white'
+            backgroundColor: colorScheme === 'dark' ? 'black' : 'white'
         }}
         >
             {children}
