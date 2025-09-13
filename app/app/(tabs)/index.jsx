@@ -9,6 +9,7 @@ import { Link } from 'expo-router';
 import TopHeader from '@/components/TopHeader';
 import SafeScreen from '@/components/SafeScreen';
 import SearchContainer from '@/components/SearchContainer';
+import ProductCard from '@/components/ProductCard';
 
 export default function HomeScreen() {
   return (
@@ -16,6 +17,7 @@ export default function HomeScreen() {
       <View style={styles.container}>
         <TopHeader />
         <SearchContainer />
+        <ProductCard />
       </View>
     </SafeScreen>
 
